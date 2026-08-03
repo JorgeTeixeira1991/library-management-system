@@ -21,11 +21,12 @@ spring:
     mcp:
       server:
         enabled: false
+  web:
+    error:
+      include-message: never
 
 server:
   port: ${SERVER_PORT:8080}
-  error:
-    include-message: never
 
 management:
   endpoints:

@@ -122,13 +122,7 @@ final class VaultOidcBootstrapClient {
         CompletableFuture<CallbackResult> callbackFuture = new CompletableFuture<>();
         URI callbackUri = properties.callbackUri();
 
-        boolean runningInWsl =
-                System.getenv("WSL_DISTRO_NAME") != null
-                        || System.getenv("WSL_INTEROP") != null;
-
-        String listenerAddress = runningInWsl
-                ? "0.0.0.0"
-                : callbackUri.getHost();
+        String listenerAddress = "0.0.0.0";
 
         InetSocketAddress address = new InetSocketAddress(
                 listenerAddress,
@@ -144,14 +138,29 @@ final class VaultOidcBootstrapClient {
 
         HttpServer callbackServer = HttpServer.create(address, 0);
         ExecutorService callbackExecutor = Executors.newVirtualThreadPerTaskExecutor();
+
         callbackServer.setExecutor(callbackExecutor);
         callbackServer.createContext(
                 callbackUri.getPath(),
                 exchange -> handleCallback(exchange, callbackFuture));
+
         callbackServer.start();
+
+        System.err.println();
+        System.err.println("Vault authentication is required.");
+        System.err.println("Open this URL in your browser:");
+        System.err.println(authUrl);
+        System.err.println();
 
         try {
             log.info("Opening the browser for passwordless email authentication");
+
+            System.err.println();
+            System.err.println("Vault authentication is required.");
+            System.err.println("Open this URL in your browser:");
+            System.err.println(authUrl);
+            System.err.println();
+
             openBrowser(authUrl);
 
             return callbackFuture.get(
@@ -164,10 +173,14 @@ final class VaultOidcBootstrapClient {
                     exception);
         } catch (ExecutionException exception) {
             Throwable cause = exception.getCause();
+
             if (cause instanceof Exception typedCause) {
                 throw typedCause;
             }
-            throw new IllegalStateException("OIDC callback failed", cause);
+
+            throw new IllegalStateException(
+                    "OIDC callback failed",
+                    cause);
         } finally {
             callbackServer.stop(0);
             callbackExecutor.close();

@@ -10,7 +10,7 @@ app:
 
 spring:
   flyway:
-    enabled: false
+    enabled: true
   datasource:
     hikari:
       maximum-pool-size: 5
