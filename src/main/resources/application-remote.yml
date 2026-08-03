@@ -1,0 +1,18 @@
+app:
+  remote-database:
+    enabled: true
+    vault-uri: https://jorgeteixeira.raspberryip.com:8200
+    oidc-role: library-reviewer
+    database-role: library-app
+    callback-uri: http://localhost:8250/oidc/callback
+    authentication-timeout: 5m
+    jdbc-url: "jdbc:postgresql://jorgeteixeira.raspberryip.com:5432/library_review?sslmode=verify-full&sslfactory=org.postgresql.ssl.DefaultJavaSSLFactory"
+
+spring:
+  flyway:
+    enabled: false
+  datasource:
+    hikari:
+      maximum-pool-size: 5
+      minimum-idle: 1
+      connection-timeout: 15000
