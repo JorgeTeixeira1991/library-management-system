@@ -1,8 +1,6 @@
 # Library Management System
 
-A complete Spring Boot library API based on the supplied research blueprint.
-
-See [`REQUIREMENTS_TRACEABILITY.md`](REQUIREMENTS_TRACEABILITY.md) for a requirement-to-code mapping.
+A Spring Boot library API.
 
 ## Implemented requirements
 
@@ -25,7 +23,7 @@ See [`REQUIREMENTS_TRACEABILITY.md`](REQUIREMENTS_TRACEABILITY.md) for a require
 - Audit timestamps and usernames
 - RFC-style `ProblemDetail` validation and error responses
 
-### Optional vertical slices
+### Optional
 
 - Testcontainers + JUnit integration tests
 - FIFO waitlist with notification reservations
@@ -39,7 +37,7 @@ See [`REQUIREMENTS_TRACEABILITY.md`](REQUIREMENTS_TRACEABILITY.md) for a require
 - Docker Compose demo packaging
 - Postman collection
 
-## Demo architecture
+## Architecture
 
 ```text
 Docker Compose
