@@ -34,7 +34,7 @@ public interface BookRepository extends JpaRepository<Book, Long> {
                 WHERE b.active = true
                   AND (
                         b.search_vector @@ q.ts_q
-                        OR b.title % q.raw_query -- O operador % usa o índice de trigrama de forma nativa (> 0.3 por padrão)
+                        OR b.title % q.raw_query
                         OR b.authors % q.raw_query
                         OR lower(b.category) LIKE lower(concat('%', q.raw_query, '%'))
                   )
